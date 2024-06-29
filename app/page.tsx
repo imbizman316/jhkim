@@ -1,10 +1,27 @@
-import Image from "next/image";
-import PortraitImage from "./(components)/PortraitImage";
+"use client";
+
+import { TypeAnimation } from "react-type-animation";
 
 export default function Home() {
   return (
-    <div>
-      <PortraitImage />
+    <div className="bg-black min-h-[50rem] p-10 w-full text-center flex flex-col items-center justify-center">
+      <TypeAnimation
+        className="text-gray-400"
+        sequence={[
+          "안녕하세요",
+          1000,
+          "김정현의 웹사이트에 오신 것을",
+          1000,
+          "환영합니다...",
+          2000,
+          ".. . ... .. .. . .. ....",
+          10000,
+        ]}
+        wrapper="span"
+        speed={40}
+        style={{ fontSize: "2em", display: "inline-block" }}
+        repeat={Infinity}
+      />
     </div>
   );
 }
