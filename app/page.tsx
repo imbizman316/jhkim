@@ -4,7 +4,7 @@ import { TypeAnimation } from "react-type-animation";
 
 export default function Home() {
   return (
-    <div className="bg-black min-h-[50rem] p-10 w-full text-center flex flex-col items-center justify-center">
+    <div className="bg-black min-h-[50rem] p-10 w-full text-center flex flex-col items-center justify-start">
       <TypeAnimation
         className="text-gray-400"
         sequence={[
