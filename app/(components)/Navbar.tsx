@@ -4,8 +4,8 @@ import PortraitImage from "./PortraitImage";
 
 function Navbar() {
   return (
-    <div className="w-full flex flex-col items-center justify-evenly py-5">
-      <div className="flex flex-row justify-evenly items-center w-full">
+    <div className="w-full flex flex-col items-center justify-evenly py-3">
+      <div className="flex flex-row justify-between px-5 items-center w-full">
         <Link className="text-black" href="/">
           Home
         </Link>

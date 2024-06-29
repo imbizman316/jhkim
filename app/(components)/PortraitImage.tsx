@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function PortraitImage() {
   return (
-    <div className="bg-white w-full flex flex-col justify-center items-center py-10 font-mono">
+    <div className="bg-white w-full flex flex-col justify-center items-center py-5 font-mono">
       <h1 className="font-semibold text-3xl mb-10 text-center">J.H. KIM</h1>
       <Image
         className="rounded-full shadow-2xl shadow-black"
