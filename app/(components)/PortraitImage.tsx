@@ -12,7 +12,7 @@ function PortraitImage() {
       <Image
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className="rounded-full shadow-2xl shadow-black hover:size-[30%] duration-300"
+        className="rounded-full shadow-2xl shadow-black hover:size-[20%] duration-300"
         src="/images/photo_2024-06-29_20-17-55.jpg"
         alt="junghyunkim"
         width={200}

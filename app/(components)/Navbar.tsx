@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import PortraitImage from "./PortraitImage";
+import AuthLinks from "./AuthLinks";
 
 function Navbar() {
   return (
@@ -12,6 +13,10 @@ function Navbar() {
         <Link className="text-black" href="/profile">
           Who is?
         </Link>
+        <Link className="text-black" href="/blogs">
+          blogs
+        </Link>
+        <AuthLinks />
       </div>
       <PortraitImage />
     </div>
