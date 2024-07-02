@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 function AuthLinks() {
-  const authenticated: boolean = false;
+  const authenticated: boolean = true;
 
   return (
     <>
