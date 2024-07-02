@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import { CiCirclePlus, CiImageOn, CiVideoOn } from "react-icons/ci";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+// import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { GoLinkExternal } from "react-icons/go";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 function WritePage() {
   const [open, setOpen] = useState(false);
