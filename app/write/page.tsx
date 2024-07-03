@@ -20,13 +20,23 @@ function WritePage() {
   return (
     <div className="min-h-screen bg-gray-300 pt-10 px-5 flex flex-col items-center">
       <input
-        className="px-5 py-3 border-2 border-gray-600"
+        className="px-5 py-3 border-2 border-gray-600 w-[300px]"
         type="text"
         placeholder="Title"
       />
+      <select name="write" id="write" className="my-5 w-[300px]">
+        <option value="diary">Diary</option>
+        <option value="novel">Novel</option>
+        <option value="news">News</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Enter image url"
+        className="px-5 py-2 w-[300px]"
+      />
       <div>
         <CiCirclePlus
-          className="text-3xl cursor-pointer"
+          className="text-3xl cursor-pointer my-3"
           onClick={() => setOpen(!open)}
         />
       </div>
