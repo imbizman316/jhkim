@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext, useAppContext } from "./context";
 
 type blogType = {
   _id: number;
@@ -42,8 +45,11 @@ const blogData: blogType = [
 ];
 
 function Diary() {
+  const { state, setState } = useAppContext();
+
   return (
     <div className="flex flex-col items-center p-10">
+      <h1>{state}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-10">
         {blogData.map((blog, index) => (
           <div
