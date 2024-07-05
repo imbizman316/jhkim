@@ -1,8 +1,8 @@
 import { NextApiRequest } from "next";
 import Blog from "@/app/(models)/Blogs";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: Request | NextRequest) {
   console.log("TRYING TO POST, BUT NOT YET POSTED");
 
   try {
