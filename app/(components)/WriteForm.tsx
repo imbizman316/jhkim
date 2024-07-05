@@ -1,15 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { CiCirclePlus, CiImageOn, CiVideoOn } from "react-icons/ci";
 import dynamic from "next/dynamic";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { GoLinkExternal } from "react-icons/go";
+import { useRouter } from "next/navigation";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-function WriteForm({ blog }) {
+type Blog = {
+  blog: {
+    _id: string;
+    title: string;
+    content: string;
+    category: string;
+    image: string;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+};
+
+function WriteForm({ blog }: Blog) {
+  const EDITMODE = blog._id === "new" ? false : true;
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -17,23 +33,134 @@ function WriteForm({ blog }) {
     setValue(value);
   }
 
+  const startingBlogData = {
+    category: "diary",
+    content: "",
+    image: "",
+    title: "",
+  };
+
+  if (EDITMODE) {
+    startingBlogData["category"] = blog.category;
+    startingBlogData["content"] = blog.content;
+    startingBlogData["image"] = blog.image;
+    startingBlogData["title"] = blog.title;
+  }
+
+  const [formData, setFormData] = useState(startingBlogData);
+
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData((pre) => ({
+      ...pre,
+      [name]: value,
+    }));
+  };
+
+  const handleReactQuillChange = (value: string) => {
+    setFormData((pre) => ({
+      ...pre,
+      content: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const url = EDITMODE ? `/api/Blogs/${blog._id}` : "/api/Blogs";
+    const method = EDITMODE ? "PUT" : "POST";
+
+    try {
+      const res = await fetch(url, {
+        method,
+        body: JSON.stringify({ formData }),
+        headers: {
+          "Content-Type": "application/json", // Correctly specified header
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(
+          EDITMODE ? "Failed to update Blog" : "Failed to create Blog"
+        );
+      }
+
+      router.push("/blogs");
+      router.refresh();
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error appropriately (e.g., show a message to the user)
+    }
+  };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   if (EDITMODE) {
+  //     const res = await fetch(`/api/Blogs/${blog._id}`, {
+  //       method: "PUT",
+  //       body: JSON.stringify({ formData }),
+  //       "content-type": "application/json",
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("Failed to update Blog");
+  //     }
+  //   } else {
+  //     const res = await fetch("/api/Blogs", {
+  //       method: "POST",
+  //       body: JSON.stringify({ formData }),
+  //       "content-type": "application/json",
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("Failed to create Blog");
+  //     }
+  //   }
+
+  //   router.push("/blogs");
+  //   router.refresh();
+  // };
+
   return (
-    <div className="min-h-screen bg-gray-300 pt-10 px-5 flex flex-col items-center">
+    <form
+      className="min-h-screen bg-gray-300 pt-10 px-5 flex flex-col items-center"
+      method="post"
+      onSubmit={handleSubmit}
+    >
       <input
+        name="title"
         className="px-5 py-3 border-2 border-gray-600 w-[500px]"
         type="text"
         placeholder="Title"
+        value={formData.title}
+        onChange={handleChange}
       />
-      <select name="write" id="write" className="my-5 w-[500px]">
-        <option value="diary">Diary</option>
-        <option value="novel">Novel</option>
-        <option value="news">News</option>
+      <select
+        name="category"
+        id="write"
+        className="my-5 w-[500px]"
+        value={formData.category}
+        onChange={handleChange}
+      >
+        <option value="Diary">Diary</option>
+        <option value="Novel">Novel</option>
+        <option value="News">News</option>
       </select>
-      <input
+      {/* <input
+        name="image"
         type="text"
         placeholder="Enter image url"
         className="px-5 py-2 w-[500px]"
-      />
+        value={formData.image}
+        onChange={handleChange}
+      /> */}
       <div>
         <CiCirclePlus
           className="text-3xl cursor-pointer my-3"
@@ -49,15 +176,17 @@ function WriteForm({ blog }) {
       )}
       <ReactQuill
         theme="bubble"
-        value={value}
-        onChange={handleValueChange}
+        value={formData.content}
+        onChange={handleReactQuillChange}
         placeholder="Tell your story..."
         className="bg-white min-h-[700px] text-2xl min-w-[500px] border-2 border-gray-400 shadow-lg"
       />
-      <button className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300 w-[500px]">
-        PUBLISH
-      </button>
-    </div>
+      <input
+        type="submit"
+        className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300 w-[500px]"
+        value={EDITMODE ? "Update" : "Create"}
+      />
+    </form>
   );
 }
 

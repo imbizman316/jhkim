@@ -114,12 +114,20 @@ async function Diary() {
                     {blog.content}
                   </p>
                 </div>
-                <Link
-                  className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
-                  href={`/blog/${blog._id}`}
-                >
-                  Read more
-                </Link>
+                <div className="flex flex-row justify-between w-full">
+                  <Link
+                    className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
+                    href={`/blog/${blog._id}`}
+                  >
+                    Read more
+                  </Link>
+                  <Link
+                    className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
+                    href={`/write/${blog._id}`}
+                  >
+                    Edit
+                  </Link>
+                </div>
               </div>
             </div>
           )

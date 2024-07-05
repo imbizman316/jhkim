@@ -1,5 +1,11 @@
 import WriteForm from "../../(components)/WriteForm";
 
+type Params = {
+  params: {
+    id: string;
+  };
+};
+
 const getBlogById = async (id: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/Blogs/${id}`, {
     cache: "no-store",
@@ -12,9 +18,21 @@ const getBlogById = async (id: string) => {
   return res.json();
 };
 
-async function WritePage({ params }) {
+interface foundBlogType {
+  _id?: string;
+  title?: string;
+  content?: string;
+  category?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  image?: string;
+  __v?: number;
+  foundBlog?: any;
+}
+
+async function WritePage({ params }: Params) {
   const EDITMODE = params.id === "new" ? false : true;
-  let updateBlogData = {};
+  let updateBlogData: foundBlogType | any = {};
 
   if (EDITMODE) {
     updateBlogData = await getBlogById(params.id);
