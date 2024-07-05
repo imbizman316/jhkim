@@ -9,7 +9,7 @@ import { GoLinkExternal } from "react-icons/go";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-function WritePage() {
+function WriteForm({ blog }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -20,11 +20,11 @@ function WritePage() {
   return (
     <div className="min-h-screen bg-gray-300 pt-10 px-5 flex flex-col items-center">
       <input
-        className="px-5 py-3 border-2 border-gray-600 w-[300px]"
+        className="px-5 py-3 border-2 border-gray-600 w-[500px]"
         type="text"
         placeholder="Title"
       />
-      <select name="write" id="write" className="my-5 w-[300px]">
+      <select name="write" id="write" className="my-5 w-[500px]">
         <option value="diary">Diary</option>
         <option value="novel">Novel</option>
         <option value="news">News</option>
@@ -32,7 +32,7 @@ function WritePage() {
       <input
         type="text"
         placeholder="Enter image url"
-        className="px-5 py-2 w-[300px]"
+        className="px-5 py-2 w-[500px]"
       />
       <div>
         <CiCirclePlus
@@ -52,13 +52,13 @@ function WritePage() {
         value={value}
         onChange={handleValueChange}
         placeholder="Tell your story..."
-        className="bg-white min-h-[700px] text-2xl min-w-[700px] border-2 border-gray-400 shadow-lg"
+        className="bg-white min-h-[700px] text-2xl min-w-[500px] border-2 border-gray-400 shadow-lg"
       />
-      <button className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300">
+      <button className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300 w-[500px]">
         PUBLISH
       </button>
     </div>
   );
 }
 
-export default WritePage;
+export default WriteForm;

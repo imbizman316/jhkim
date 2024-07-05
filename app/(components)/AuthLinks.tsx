@@ -8,7 +8,7 @@ function AuthLinks() {
     <>
       {authenticated ? (
         <>
-          <Link href="/write">Write</Link>
+          <Link href="/write/new">Write</Link>
           <span>Logout</span>
         </>
       ) : (
