@@ -7,7 +7,7 @@ interface Params {
   };
 }
 
-export async function GET(req: Response | NextRequest, { params }: Params) {
+export async function GET(req: Request | NextRequest, { params }: Params) {
   try {
     const { id } = params;
     const foundBlog = await Blog.findOne({
