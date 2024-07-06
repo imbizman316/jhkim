@@ -22,11 +22,14 @@ async function BlogDetailPage({ params }: Params) {
   let BlogData = await getBlogById(params.id);
   BlogData = BlogData.foundBlog;
 
+  const slicedDate = BlogData.createdAt?.slice(0, 10);
+
   return (
     <div className="min-h-screen min-w-full flex flex-col items-center py-7 px-10">
       <h1 className="text-sm">{BlogData.category}</h1>
-      <h1 className="text-3xl font-bold">{BlogData.title}</h1>
-      <p className="py-10 max-w-[500px]">{BlogData.content}</p>
+      <h1>{slicedDate}</h1>
+      <h1 className="text-3xl font-bold py-10 ">{BlogData.title}</h1>
+      <p className="max-w-[500px]">{BlogData.content}</p>
     </div>
   );
 }
