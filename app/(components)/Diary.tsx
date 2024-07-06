@@ -14,36 +14,6 @@ type blogType = {
   content: string;
 }[];
 
-const blogData: blogType = [
-  {
-    _id: 0,
-    category: "diary",
-    createdAt: "2024-06-28T17:04:12.133+00:00",
-    title: "나는 김정현이다..",
-    image: "/images/photo_2024-06-29_22-15-54.jpg",
-    content: "나는 나고, 너는 너다.  내 인생 내가 산다... . ....",
-  },
-  {
-    _id: 1,
-    category: "diary",
-    createdAt: "2024-06-28T17:04:12.133+00:00",
-    title: "Life is hard",
-    image: "/images/abstract-drawing-woman-head-cubist-art.avif",
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius, enim expedita unde cupiditate, excepturi similique adipisci tempora ad numquam minima earum tempore voluptate molestiae magni fuga quas esse voluptatum provident.",
-  },
-  {
-    _id: 2,
-    category: "diary",
-    createdAt: "2024-06-28T17:04:12.133+00:00",
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit adipisci sed sint maxime. Quas eaque veniam voluptas voluptatibus atque esse, dolorum alias, sed blanditiis dolores placeat debitis laudantium reprehenderit recusandae!",
-    image: "/images/abstract-drawing-woman-head-cubist-art.avif",
-    content:
-      "나는 나고, 너는 너다.  내 인생 내가 산다... . ....ㅎㅎㅎㅎㅎ ㅋㅋㅋㅋㅋㅋ 하하하하하핳ㅎㅎㅎㅎㅎ나는 나고, 너는 너다.  내 인생 내가 산다... . ....ㅎㅎㅎㅎㅎ ㅋㅋㅋㅋㅋㅋ 하하하하하핳ㅎㅎㅎㅎㅎ",
-  },
-];
-
 const getBlogs = async () => {
   console.log(process.env.NEXT_PUBLIC_URL);
   console.log("YELLOW");
@@ -117,7 +87,7 @@ async function Diary() {
                 <div className="flex flex-row justify-between w-full">
                   <Link
                     className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
-                    href={`/blog/${blog._id}`}
+                    href={`/blogs/${blog._id}`}
                   >
                     Read more
                   </Link>
