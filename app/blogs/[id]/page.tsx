@@ -1,3 +1,5 @@
+import BlogActions from "@/app/(components)/BlogActions";
+import Link from "next/link";
 import React from "react";
 
 const getBlogById = async (id: string) => {
@@ -30,6 +32,7 @@ async function BlogDetailPage({ params }: Params) {
       <h1>{slicedDate}</h1>
       <h1 className="text-3xl font-bold py-10 ">{BlogData.title}</h1>
       <p className="max-w-[500px]">{BlogData.content}</p>
+      <BlogActions id={BlogData._id} />
     </div>
   );
 }

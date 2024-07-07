@@ -91,12 +91,12 @@ async function Diary() {
                   >
                     Read more
                   </Link>
-                  <Link
+                  {/* <Link
                     className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
                     href={`/write/${blog._id}`}
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
