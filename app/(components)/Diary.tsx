@@ -45,7 +45,7 @@ async function Diary() {
   return (
     <div className="flex flex-col items-center p-10">
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
-        {blogs.map(
+        {blogs?.reverse().map(
           (
             blog: {
               _id: string;
