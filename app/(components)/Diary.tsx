@@ -76,7 +76,7 @@ async function Diary() {
               <div className="flex flex-col justify-between items-start h-auto">
                 <div>
                   <div className="flex flex-row text-sm justify-between mb-3 w-[100%]">
-                    <h1>{blog.createdAt}</h1>
+                    <h1>{blog.createdAt?.slice(0, 10)}</h1>
                     <h1>{blog.category}</h1>
                   </div>
                   <h1 className="text-2xl font-bold max-h-[30px] overflow-hidden mb-3">
