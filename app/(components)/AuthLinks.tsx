@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { navBarStyle } from "./Navbar";
 
 function AuthLinks() {
   const authenticated: boolean = true;
@@ -8,11 +9,15 @@ function AuthLinks() {
     <>
       {authenticated ? (
         <>
-          <Link href="/write/new">Write</Link>
+          <Link className={navBarStyle} href="/write/new">
+            Write
+          </Link>
           <span>Logout</span>
         </>
       ) : (
-        <Link href="/login">Login</Link>
+        <Link className={navBarStyle} href="/login">
+          Login
+        </Link>
       )}
     </>
   );
