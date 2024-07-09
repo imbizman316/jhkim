@@ -34,7 +34,7 @@ function WriteForm({ blog }: Blog) {
   }
 
   const startingBlogData = {
-    category: "diary",
+    category: "Diary",
     content: "",
     image: "",
     title: "",
@@ -98,35 +98,6 @@ function WriteForm({ blog }: Blog) {
       // Handle error appropriately (e.g., show a message to the user)
     }
   };
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (EDITMODE) {
-  //     const res = await fetch(`/api/Blogs/${blog._id}`, {
-  //       method: "PUT",
-  //       body: JSON.stringify({ formData }),
-  //       "content-type": "application/json",
-  //     });
-
-  //     if (!res.ok) {
-  //       throw new Error("Failed to update Blog");
-  //     }
-  //   } else {
-  //     const res = await fetch("/api/Blogs", {
-  //       method: "POST",
-  //       body: JSON.stringify({ formData }),
-  //       "content-type": "application/json",
-  //     });
-
-  //     if (!res.ok) {
-  //       throw new Error("Failed to create Blog");
-  //     }
-  //   }
-
-  //   router.push("/blogs");
-  //   router.refresh();
-  // };
 
   return (
     <form

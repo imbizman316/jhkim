@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import WriteForm from "../../(components)/WriteForm";
+import Loading from "@/app/(components)/Loading";
 
 type Params = {
   params: {
@@ -45,7 +47,9 @@ async function WritePage({ params }: Params) {
 
   return (
     <div>
-      <WriteForm blog={updateBlogData} />
+      <Suspense fallback={<Loading />}>
+        <WriteForm blog={updateBlogData} />
+      </Suspense>
     </div>
   );
 }

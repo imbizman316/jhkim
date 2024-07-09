@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { AppContext, useAppContext } from "./context";
+import dompurify from "isomorphic-dompurify";
 
 type blogType = {
   _id: number;
@@ -37,11 +38,13 @@ const getBlogs = async () => {
 };
 
 async function Diary() {
+  const sanitizer = dompurify.sanitize;
+
   const { blogs } = await getBlogs();
 
   return (
     <div className="flex flex-col items-center p-10">
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
         {blogs.map(
           (
             blog: {
@@ -80,9 +83,12 @@ async function Diary() {
                     {blog.title}
                   </h1>
 
-                  <p className="w-auto overflow-hidden max-h-[100px]">
-                    {blog.content}
-                  </p>
+                  <div
+                    className="w-auto overflow-hidden max-h-[100px]"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizer(blog.content),
+                    }}
+                  ></div>
                 </div>
                 <div className="flex flex-row justify-between w-full">
                   <Link
