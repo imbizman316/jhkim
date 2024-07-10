@@ -41,7 +41,11 @@ function WriteForm({ blog }: Blog) {
 
   useEffect(() => {
     const upload = () => {
-      const name = new Date().getTime() + file.name;
+      if (!file) {
+        console.error("No file selected");
+      }
+
+      const name = new Date().getTime() + file?.name;
       const storageRef = ref(storage, name);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
