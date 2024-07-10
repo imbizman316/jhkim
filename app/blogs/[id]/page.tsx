@@ -41,7 +41,7 @@ async function BlogDetailPage({ params }: Params) {
         <h1 className="text-3xl font-bold py-10 ">{BlogData.title}</h1>
         <div
           style={{ whiteSpace: "normal" }}
-          className="max-w-[500px]"
+          className="w-[350px] sm:w-[350px] md:w-[500px] lg:w-[600px] mb-10"
           dangerouslySetInnerHTML={{
             __html: sanitizer(BlogData?.content),
           }}
@@ -49,12 +49,13 @@ async function BlogDetailPage({ params }: Params) {
         <Image
           src={BlogData.image}
           alt={BlogData.title}
-          width={300}
-          height={300}
+          width={200}
+          height={200}
+          className="w-[300px] sm:w-[300px] md:w-[400px] lg:w-[500px]"
           style={{
             objectFit: "contain",
-            width: "600px",
-            height: "600px",
+            width: "500px",
+            height: "500px",
           }}
           sizes="(max-height: 100px)"
         />
