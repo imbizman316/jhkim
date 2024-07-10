@@ -168,7 +168,7 @@ function WriteForm({ blog }: Blog) {
     >
       <input
         name="title"
-        className="px-5 py-3 border-2 border-gray-600 w-[500px]"
+        className="px-5 py-3 border-2 border-gray-600 sm:w-[300px] md:w-[300px] lg:w-[500px]"
         type="text"
         placeholder="Title"
         value={formData.title}
@@ -177,7 +177,7 @@ function WriteForm({ blog }: Blog) {
       <select
         name="category"
         id="write"
-        className="my-5 w-[500px]"
+        className="my-5 w-[265px] sm:w-[300px] md:w-[300px] lg:w-[500px]"
         value={formData.category}
         onChange={handleChange}
       >
@@ -227,7 +227,7 @@ function WriteForm({ blog }: Blog) {
         value={formData.content}
         onChange={handleReactQuillChange}
         placeholder="Tell your story..."
-        className="bg-white min-h-[700px] text-2xl min-w-[500px] border-2 border-gray-400 shadow-lg"
+        className="bg-white min-h-[700px] text-2xl w-[300px] sm:w-[300px] md:w-[300px] lg:w-[500px] border-2 border-gray-400 shadow-lg"
       />
       <input
         type="submit"
