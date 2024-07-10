@@ -36,19 +36,28 @@ function WriteForm({ blog }: Blog) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState<string | null>("");
+  const [file, setFile] = useState<File | Blob | null>(null);
   const [media, setMedia] = useState("");
 
   useEffect(() => {
     const upload = () => {
       if (!file) {
         console.error("No file selected");
+        return;
       }
 
-      const name = new Date().getTime() + file;
+      let name = "";
+
+      if (file instanceof File) {
+        name = new Date().getTime().toString() + file.name;
+      } else {
+        console.error("Expected file to be of type File");
+        return;
+      }
+
       const storageRef = ref(storage, name);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file as Blob);
 
       uploadTask.on(
         "state_changed",
@@ -184,7 +193,9 @@ function WriteForm({ blog }: Blog) {
         value={formData.image}
         onChange={handleChange}
       /> */}
-      <p className="text-sm">표시할 이미지: {file?.name}</p>
+      <p className="text-sm">
+        표시할 이미지: {file instanceof File && file.name}
+      </p>
       {/* <p>{media ? media : "no file"}</p> */}
       <div>
         <CiCirclePlus
@@ -197,7 +208,11 @@ function WriteForm({ blog }: Blog) {
           <input
             type="file"
             id="image"
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) =>
+              e.target.files &&
+              e.target.files.length > 0 &&
+              setFile(e.target.files[0])
+            }
             style={{ display: "none" }}
           />
           <label htmlFor="image">
