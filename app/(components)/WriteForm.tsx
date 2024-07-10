@@ -45,7 +45,7 @@ function WriteForm({ blog }: Blog) {
         console.error("No file selected");
       }
 
-      const name = new Date().getTime() + file?.name;
+      const name = new Date().getTime() + file;
       const storageRef = ref(storage, name);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
