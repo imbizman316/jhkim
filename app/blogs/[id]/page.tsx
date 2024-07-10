@@ -3,6 +3,7 @@ import BlogActions from "@/app/(components)/BlogActions";
 import Link from "next/link";
 import React from "react";
 import Loading from "@/app/(components)/Loading";
+import Image from "next/image";
 // import DOMPurify from "dompurify";
 import dompurify from "isomorphic-dompurify";
 
@@ -44,6 +45,18 @@ async function BlogDetailPage({ params }: Params) {
           dangerouslySetInnerHTML={{
             __html: sanitizer(BlogData?.content),
           }}
+        />
+        <Image
+          src={BlogData.image}
+          alt={BlogData.title}
+          width={300}
+          height={300}
+          style={{
+            objectFit: "contain",
+            width: "600px",
+            height: "600px",
+          }}
+          sizes="(max-height: 100px)"
         />
 
         {/* <p style={{ whiteSpace: "normal" }} className="max-w-[500px]">

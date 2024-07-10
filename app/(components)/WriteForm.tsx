@@ -1,12 +1,21 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { CiCirclePlus, CiImageOn, CiVideoOn } from "react-icons/ci";
 import dynamic from "next/dynamic";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { GoLinkExternal } from "react-icons/go";
 import { useRouter } from "next/navigation";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "../utils/firebase";
+
+const storage = getStorage(app);
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -27,11 +36,50 @@ function WriteForm({ blog }: Blog) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [file, setFile] = useState<string | null>("");
+  const [media, setMedia] = useState("");
 
-  function handleValueChange(value: string): void {
-    setValue(value);
-  }
+  useEffect(() => {
+    const upload = () => {
+      const name = new Date().getTime() + file.name;
+      const storageRef = ref(storage, name);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log("Failed to upload image");
+          console.error(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setMedia(downloadURL);
+            console.log("File available at", downloadURL);
+            setFormData((pre) => ({
+              ...pre,
+              image: downloadURL,
+            }));
+          });
+        }
+      );
+    };
+
+    file && upload();
+  }, [file]);
 
   const startingBlogData = {
     category: "Diary",
@@ -132,6 +180,8 @@ function WriteForm({ blog }: Blog) {
         value={formData.image}
         onChange={handleChange}
       /> */}
+      <p className="text-sm">표시할 이미지: {file?.name}</p>
+      {/* <p>{media ? media : "no file"}</p> */}
       <div>
         <CiCirclePlus
           className="text-3xl cursor-pointer my-3"
@@ -140,9 +190,17 @@ function WriteForm({ blog }: Blog) {
       </div>
       {open && (
         <div className="flex flex-row gap-3 bg-white p-3 rounded-lg">
-          <CiImageOn className="text-4xl" />
-          <GoLinkExternal className="text-4xl" />
-          <CiVideoOn className="text-4xl" />
+          <input
+            type="file"
+            id="image"
+            onChange={(e) => setFile(e.target.files[0])}
+            style={{ display: "none" }}
+          />
+          <label htmlFor="image">
+            <CiImageOn className="text-4xl" />
+          </label>
+          {/* <GoLinkExternal className="text-4xl" />
+          <CiVideoOn className="text-4xl" /> */}
         </div>
       )}
       <ReactQuill

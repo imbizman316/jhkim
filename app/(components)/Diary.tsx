@@ -38,6 +38,13 @@ const getBlogs = async () => {
 };
 
 async function Diary() {
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  console.log(year, month, day);
+
   const sanitizer = dompurify.sanitize;
 
   const { blogs } = await getBlogs();
@@ -61,7 +68,7 @@ async function Diary() {
               key={index}
               className="flex flex-row gap-7 hover:outline-black hover:outline-offset-4 hover:outline-dotted duration-200"
             >
-              {/* <Image
+              <Image
                 src={blog.image}
                 alt={blog.title}
                 width={300}
@@ -72,7 +79,7 @@ async function Diary() {
                   height: "200px",
                 }}
                 sizes="(max-height: 100px)"
-              /> */}
+              />
               <div className="flex flex-col justify-between items-start h-auto">
                 <div>
                   <div className="flex flex-row text-sm justify-between mb-3 w-[100%]">
