@@ -75,16 +75,16 @@ async function Diary() {
                   width={300}
                   height={300}
                   style={{
-                    objectFit: "contain",
-                    width: "200px",
-                    height: "200px",
+                    objectFit: "cover",
+                    width: "280px",
+                    height: "280px",
                   }}
                   sizes="(max-height: 100px)"
                 />
               </div>
               <div className="flex flex-col justify-between items-start h-auto">
                 <div>
-                  <div className="flex flex-row text-sm justify-between mb-3 w-[100%]">
+                  <div className="flex flex-row text-sm justify-between mb-3 w-auto">
                     <h1>{blog.createdAt?.slice(0, 10)}</h1>
                     <h1>{blog.category}</h1>
                   </div>

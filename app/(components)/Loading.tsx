@@ -2,7 +2,7 @@ import React from "react";
 
 function Loading() {
   return (
-    <div className="w-full min-h-screen flex justify-center items-start pt-[300px]">
+    <div className="w-full min-h-screen flex justify-center items-start pt-[240px]">
       <svg
         className="animate-spin duration-300 h-7 w-7 mr-5 text-black text-5xl"
         xmlns="http://www.w3.org/2000/svg"

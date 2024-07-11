@@ -6,6 +6,7 @@ import Loading from "@/app/(components)/Loading";
 import Image from "next/image";
 // import DOMPurify from "dompurify";
 import dompurify from "isomorphic-dompurify";
+import { BiFullscreen } from "react-icons/bi";
 
 const getBlogById = async (id: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/Blogs/${id}`, {
@@ -49,27 +50,27 @@ async function BlogDetailPage({ params }: Params) {
         <Image
           src={BlogData.image}
           alt={BlogData.title}
-          width={200}
-          height={200}
-          className="w-[300px] sm:w-[300px] md:w-[400px] lg:w-[500px]"
+          width={600}
+          height={600}
+          className="w-[400px] sm:w-[400px] md:w-[400px] lg:w-[700px]"
           style={{
             objectFit: "contain",
-            width: "500px",
-            height: "500px",
+            width: "600px",
+            // height: "500px",
           }}
-          sizes="(max-height: 100px)"
+          // sizes="(max-height: 500px)"
         />
 
         {/* <p style={{ whiteSpace: "normal" }} className="max-w-[500px]">
           {BlogData.content}
-        </p> */}
+          </p> */}
         <BlogActions id={BlogData._id} />
       </>
     );
   };
 
   return (
-    <div className="min-h-screen min-w-full flex flex-col items-center py-7 px-10">
+    <div className="min-h-screen w-[350px] flex flex-col items-center justify-center py-7 px-10">
       <Suspense fallback={<Loading />}>
         <DisplayBlog />
       </Suspense>
