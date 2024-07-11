@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Nanum_Gothic_Coding, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "./(components)/Navbar";
 import { AppWrapper } from "./(components)/context";
 import Footer from "./(components)/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+const nanum = Nanum_Gothic_Coding({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "J.H.Kim The Writer",
@@ -20,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={nanum.className}>
         <AppWrapper>
           <Navbar />
           {children}

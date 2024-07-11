@@ -16,7 +16,7 @@ function Navbar() {
           Who is?
         </Link>
         <Link className={navBarStyle} href="/blogs">
-          blogs
+          Blogs
         </Link>
         <AuthLinks />
       </div>
