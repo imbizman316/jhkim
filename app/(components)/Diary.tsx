@@ -66,20 +66,22 @@ async function Diary() {
           ) => (
             <div
               key={index}
-              className="flex flex-row gap-7 hover:outline-black hover:outline-offset-4 hover:outline-dotted duration-200"
+              className="flex sm:flex-col md:flex-row lg:flex-row flex-col gap-7 hover:outline-black hover:outline-offset-4 hover:outline-dotted duration-200"
             >
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                width={300}
-                height={300}
-                style={{
-                  objectFit: "contain",
-                  width: "200px",
-                  height: "200px",
-                }}
-                sizes="(max-height: 100px)"
-              />
+              <div className="flex justify-center items-center">
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  width={300}
+                  height={300}
+                  style={{
+                    objectFit: "contain",
+                    width: "200px",
+                    height: "200px",
+                  }}
+                  sizes="(max-height: 100px)"
+                />
+              </div>
               <div className="flex flex-col justify-between items-start h-auto">
                 <div>
                   <div className="flex flex-row text-sm justify-between mb-3 w-[100%]">
