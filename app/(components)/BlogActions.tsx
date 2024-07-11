@@ -32,7 +32,7 @@ function BlogActions({ id }: { id: string }) {
   };
 
   return (
-    <div className="relative w-[500px] flex flex-col justify-center items-center">
+    <div className="relative w-screen flex flex-col justify-center items-center">
       <h1 className="text-3xl cursor-pointer" onClick={handleSetMenu}>
         ...
       </h1>
