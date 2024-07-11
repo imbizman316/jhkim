@@ -1,7 +1,12 @@
 "use client";
 
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { CiCirclePlus, CiImageOn, CiVideoOn } from "react-icons/ci";
+import {
+  CiCirclePlus,
+  CiCircleMinus,
+  CiImageOn,
+  CiVideoOn,
+} from "react-icons/ci";
 import dynamic from "next/dynamic";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
@@ -168,7 +173,7 @@ function WriteForm({ blog }: Blog) {
     >
       <input
         name="title"
-        className="px-5 py-3 border-2 border-gray-600 sm:w-[300px] md:w-[300px] lg:w-[500px]"
+        className="px-5 py-3 border-2 border-gray-400 w-[300px] sm:w-[300px] md:w-[300px] lg:w-[500px]"
         type="text"
         placeholder="Title"
         value={formData.title}
@@ -177,7 +182,7 @@ function WriteForm({ blog }: Blog) {
       <select
         name="category"
         id="write"
-        className="my-5 w-[265px] sm:w-[300px] md:w-[300px] lg:w-[500px]"
+        className="my-5 w-[300px] sm:w-[300px] md:w-[300px] lg:w-[500px] border-gray-400 border-2"
         value={formData.category}
         onChange={handleChange}
       >
@@ -194,34 +199,42 @@ function WriteForm({ blog }: Blog) {
         onChange={handleChange}
       /> */}
       <p className="text-sm">
-        표시할 이미지: {file instanceof File && file.name}
+        대표 이미지: {file instanceof File && file.name}
       </p>
       {/* <p>{media ? media : "no file"}</p> */}
-      <div>
-        <CiCirclePlus
-          className="text-3xl cursor-pointer my-3"
-          onClick={() => setOpen(!open)}
-        />
-      </div>
-      {open && (
-        <div className="flex flex-row gap-3 bg-white p-3 rounded-lg">
-          <input
-            type="file"
-            id="image"
-            onChange={(e) =>
-              e.target.files &&
-              e.target.files.length > 0 &&
-              setFile(e.target.files[0])
-            }
-            style={{ display: "none" }}
+
+      <div className="flex flex-row gap-10 py-5 justify-center items-center">
+        {!open ? (
+          <CiCirclePlus
+            className="text-4xl cursor-pointer"
+            onClick={() => setOpen(!open)}
           />
-          <label htmlFor="image">
-            <CiImageOn className="text-4xl" />
-          </label>
-          {/* <GoLinkExternal className="text-4xl" />
+        ) : (
+          <CiCircleMinus
+            className="text-4xl cursor-pointer"
+            onClick={() => setOpen(!open)}
+          />
+        )}
+        {open && (
+          <div className="flex flex-row gap-3 bg-white rounded-lg">
+            <input
+              type="file"
+              id="image"
+              onChange={(e) =>
+                e.target.files &&
+                e.target.files.length > 0 &&
+                setFile(e.target.files[0])
+              }
+              style={{ display: "none" }}
+            />
+            <label htmlFor="image">
+              <CiImageOn className="text-4xl" />
+            </label>
+            {/* <GoLinkExternal className="text-4xl" />
           <CiVideoOn className="text-4xl" /> */}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
       <ReactQuill
         theme="bubble"
         value={formData.content}
@@ -231,7 +244,7 @@ function WriteForm({ blog }: Blog) {
       />
       <input
         type="submit"
-        className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300 w-[500px]"
+        className="bg-gray-700 text-white px-10 py-1 my-5 hover:bg-black duration-300 w-[300px] sm:w-[300px] md:w-[300px] lg:w-[500px]"
         value={EDITMODE ? "Update" : "Create"}
       />
     </form>
