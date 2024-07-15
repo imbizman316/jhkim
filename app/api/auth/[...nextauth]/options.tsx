@@ -13,7 +13,10 @@ export const options = {
         console.log("Profile Google", profile);
 
         let userRole = "Google User";
-        if (profile?.email === process.env.ADMIN_EMAIL) {
+        if (
+          profile?.email === process.env.ADMIN_EMAIL ||
+          profile?.email === process.env.ADMIN_EMAIL_2
+        ) {
           userRole = "admin";
         }
         return {
