@@ -6,7 +6,8 @@ import Loading from "@/app/(components)/Loading";
 import Image from "next/image";
 // import DOMPurify from "dompurify";
 import dompurify from "isomorphic-dompurify";
-import { BiFullscreen } from "react-icons/bi";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 const getBlogById = async (id: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/Blogs/${id}`, {
@@ -27,6 +28,8 @@ type Params = {
 };
 
 async function BlogDetailPage({ params }: Params) {
+  const session = await getServerSession(options);
+
   const sanitizer = dompurify.sanitize;
 
   let BlogData = await getBlogById(params.id);
@@ -64,7 +67,9 @@ async function BlogDetailPage({ params }: Params) {
         {/* <p style={{ whiteSpace: "normal" }} className="max-w-[500px]">
           {BlogData.content}
           </p> */}
-        <BlogActions id={BlogData._id} />
+        {session && session?.user?.role === "admin" && (
+          <BlogActions id={BlogData._id} />
+        )}
       </>
     );
   };
