@@ -22,12 +22,11 @@ async function Navbar() {
         <Link className={navBarStyle} href="/blogs">
           Blogs
         </Link>
-        {session?.user?.email === process.env.ADMIN_EMAIL ||
-          (session?.user?.email === process.env.ADMIN_EMAIL_2 && (
-            <Link className={navBarStyle} href="/write/new">
-              Write
-            </Link>
-          ))}
+        {session?.user?.role === "admin" && (
+          <Link className={navBarStyle} href="/write/new">
+            Write
+          </Link>
+        )}
         {/* <AuthLinks /> */}
         {session ? (
           <Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
