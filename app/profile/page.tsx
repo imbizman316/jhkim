@@ -15,7 +15,7 @@ function Profile() {
   const [description, setDescription] =
     useState("잡지사 객원기자 시공사, 제우미디");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Get title, and description and post them to mongoDB
   };
