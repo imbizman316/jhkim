@@ -6,7 +6,7 @@ export const AppContext = createContext<any>(null);
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState("mikey is rampant");
-  const [openProfileEdit, setOpenProfileEdit] = useState(true);
+  const [openProfileEdit, setOpenProfileEdit] = useState(false);
 
   return (
     <AppContext.Provider
