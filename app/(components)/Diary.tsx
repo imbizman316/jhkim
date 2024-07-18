@@ -5,17 +5,18 @@ import Link from "next/link";
 import React, { useContext } from "react";
 import { AppContext, useAppContext } from "./context";
 import dompurify from "isomorphic-dompurify";
+import BlogCard from "./BlogCard";
 
-type blogType = {
-  _id: number;
+type Blog = {
+  _id: string;
   category: string;
   createdAt: string;
   title: string;
   image: string;
   content: string;
-}[];
+};
 
-const getBlogs = async () => {
+const getBlogs = async (): Promise<{ blogs: Blog[] }> => {
   console.log(process.env.NEXT_PUBLIC_URL);
   console.log("YELLOW");
 
@@ -49,75 +50,36 @@ async function Diary() {
 
   const { blogs } = await getBlogs();
 
-  return (
-    <div className="flex flex-col items-center p-10">
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
-        {blogs?.reverse().map(
-          (
-            blog: {
-              _id: string;
-              image: string;
-              title: string;
-              createdAt: string;
-              category: string;
-              content: string;
-            },
-            index: number
-          ) => (
-            <div
-              key={index}
-              className="flex sm:flex-col md:flex-row lg:flex-row flex-col gap-7 hover:outline-black hover:outline-offset-4 hover:outline-dotted duration-200"
-            >
-              <div className="flex justify-center items-center">
-                <Image
-                  src={blog.image}
-                  alt={blog.title}
-                  width={300}
-                  height={300}
-                  style={{
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                  sizes="(max-height: 100px)"
-                />
-              </div>
-              <div className="flex flex-col justify-between items-start h-auto">
-                <div>
-                  <div className="flex flex-row text-sm justify-between mb-3 w-auto">
-                    <h1>{blog.createdAt?.slice(0, 10)}</h1>
-                    <h1>{blog.category}</h1>
-                  </div>
-                  <h1 className="text-2xl font-bold max-h-[30px] overflow-hidden mb-3">
-                    {blog.title}
-                  </h1>
+  // const uniqueCategories = [
+  //   ...new Set(blogs?.map(({ category }: { category: string }) => category)),
+  // ];
 
-                  <div
-                    className="w-auto overflow-hidden max-h-[100px]"
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizer(blog.content),
-                    }}
-                  ></div>
-                </div>
-                <div className="flex flex-row justify-between w-full">
-                  <Link
-                    className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
-                    href={`/blogs/${blog._id}`}
-                  >
-                    Read more
-                  </Link>
-                  {/* <Link
-                    className="text-gray-400 hover:text-gray-700 duration-300 hover:font-semibold"
-                    href={`/write/${blog._id}`}
-                  >
-                    Edit
-                  </Link> */}
-                </div>
-              </div>
+  const uniqueCategories = [
+    ...new Set(blogs?.map((blog: Blog) => blog.category)),
+  ];
+
+  console.log(uniqueCategories);
+
+  return (
+    <div className="flex flex-col items-center p-10 gap-10">
+      {blogs &&
+        uniqueCategories?.map((category, index) => (
+          <div key={index} className="w-full">
+            <hr className="" />
+            <h1 className="text-3xl text-center font-bold bg-gray-200 py-2 mb-3">
+              {category}
+            </h1>
+            <hr className="" />
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
+              {blogs
+                ?.filter((blog: Blog) => blog.category === category)
+                .reverse()
+                .map((blog: Blog, index: number) => (
+                  <BlogCard blog={blog} key={index} />
+                ))}
             </div>
-          )
-        )}
-      </div>
+          </div>
+        ))}
     </div>
   );
 }
