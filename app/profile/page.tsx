@@ -167,7 +167,7 @@ function Profile() {
       {openProfileEdit && (
         <Draggable>
           <form
-            className="absolute top-[400px] flex flex-col gap-3 bg-gray-300 border-2 border-black p-5 w-[50%]"
+            className="absolute top-[400px] flex flex-col gap-3 bg-gray-300 border-2 border-black p-5 w-[90%] sm:w-[90%] md:w-[70%] lg:w-[50%]"
             onSubmit={handleSubmit}
           >
             <div className="flex justify-between items-center">
