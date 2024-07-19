@@ -1,23 +1,139 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useAppContext } from "../(components)/context";
 import { LiaWindowCloseSolid } from "react-icons/lia";
+import { useRouter } from "next/navigation";
 
 const text = "- 대표작 <매드월드> 스토리, 세계관 리드 라이터";
 
+type ProfileData = {
+  _id: string;
+  createdAt: string;
+  title: string;
+  image: string;
+  content: string;
+};
+
+async function fetchProfileData() {
+  try {
+    console.log("Getting profile data");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/ProfileData`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await res.json();
+    console.log("Data returned is this", data);
+
+    console.log("successfully got the profile data");
+
+    return data;
+  } catch (error) {
+    console.log("Failed to get profile data");
+  }
+}
+
 function Profile() {
+  const router = useRouter();
+
   const { openProfileEdit, setOpenProfileEdit } = useAppContext();
 
-  const [title, setTitle] = useState("시나리오 라이터 J.H. Kim");
-  const [description, setDescription] =
-    useState("잡지사 객원기자 시공사, 제우미디");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // async function getProfileData() {
+  //   try {
+  //     console.log("Getting profile data");
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_URL}/api/ProfileData`,
+  //       {
+  //         cache: "no-store",
+  //       }
+  //     );
+
+  //     if (!res.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+
+  //     const data = await res.json();
+
+  //     console.log("successfully got the profile data");
+
+  //     setProfileData(data[0]);
+
+  //     // return data;
+  //   } catch (error) {
+  //     console.log("Failed to get profile data");
+  //   }
+  // }
+
+  useEffect(() => {
+    async function loadProfileData() {
+      const data = await fetchProfileData();
+      if (data && data.profileData && data.profileData.length > 0) {
+        console.log("Setting profile dat:", data.profileData[0]);
+        setProfileData(data.profileData[0]);
+        setTitle(data.profileData[0].title);
+        setDescription(data.profileData[0].content);
+      } else {
+        console.log("No profile data found");
+      }
+    }
+
+    loadProfileData();
+  }, []);
+
+  console.log("here is", profileData);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Get title, and description and post them to mongoDB
+    const url = "/api/ProfileData";
+    const method = "PUT";
+
+    try {
+      const res = await fetch(url, {
+        method,
+        body: JSON.stringify({
+          formData: {
+            title: title,
+            image: "",
+            content: description,
+          },
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update Profile");
+      }
+
+      // router.push("/profile");
+      // router.refresh();
+
+      const updatedData = await fetchProfileData();
+      if (
+        updatedData &&
+        updatedData.profileData &&
+        updatedData.profileData.length > 0
+      ) {
+        setProfileData(updatedData.profileData[0]);
+        setTitle(updatedData.profileData[0].title);
+        setDescription(updatedData.profileData[0].content);
+        setOpenProfileEdit(false);
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
@@ -31,9 +147,11 @@ function Profile() {
           height={300}
         />
         <div className="text-white max-w-[320px] text-sm">
-          <h1 className="font-bold text-xl text-center">{title}</h1>
+          <h1 className="font-bold text-xl text-center">
+            {profileData?.title}
+          </h1>
           <hr className="py-3 mt-3" />
-          <h1>{description}</h1>
+          <h1>{profileData?.content}</h1>
 
           {/* <h1 className="">- (전) 잡지사 객원기자 (시공사, 제우미디어)</h1>
           <h1 className="">

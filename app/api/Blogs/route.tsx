@@ -1,5 +1,5 @@
 import { NextApiRequest } from "next";
-import Blog from "@/app/(models)/Blogs";
+import Blog, { ProfileData } from "@/app/(models)/Blogs";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: Request | NextRequest) {
