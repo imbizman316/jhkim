@@ -7,8 +7,6 @@ import { useAppContext } from "../(components)/context";
 import { LiaWindowCloseSolid } from "react-icons/lia";
 import { useRouter } from "next/navigation";
 
-const text = "- 대표작 <매드월드> 스토리, 세계관 리드 라이터";
-
 type ProfileData = {
   _id: string;
   createdAt: string;
@@ -40,39 +38,11 @@ async function fetchProfileData() {
 }
 
 function Profile() {
-  const router = useRouter();
-
   const { openProfileEdit, setOpenProfileEdit } = useAppContext();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
-
-  // async function getProfileData() {
-  //   try {
-  //     console.log("Getting profile data");
-  //     const res = await fetch(
-  //       `${process.env.NEXT_PUBLIC_URL}/api/ProfileData`,
-  //       {
-  //         cache: "no-store",
-  //       }
-  //     );
-
-  //     if (!res.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-
-  //     const data = await res.json();
-
-  //     console.log("successfully got the profile data");
-
-  //     setProfileData(data[0]);
-
-  //     // return data;
-  //   } catch (error) {
-  //     console.log("Failed to get profile data");
-  //   }
-  // }
 
   useEffect(() => {
     async function loadProfileData() {
@@ -90,11 +60,9 @@ function Profile() {
     loadProfileData();
   }, []);
 
-  console.log("here is", profileData);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //Get title, and description and post them to mongoDB
+
     const url = "/api/ProfileData";
     const method = "PUT";
 
@@ -116,9 +84,6 @@ function Profile() {
       if (!res.ok) {
         throw new Error("Failed to update Profile");
       }
-
-      // router.push("/profile");
-      // router.refresh();
 
       const updatedData = await fetchProfileData();
       if (
@@ -152,15 +117,6 @@ function Profile() {
           </h1>
           <hr className="py-3 mt-3" />
           <h1>{profileData?.content}</h1>
-
-          {/* <h1 className="">- (전) 잡지사 객원기자 (시공사, 제우미디어)</h1>
-          <h1 className="">
-            - (전) 예술 커뮤니티 사이트 총괄 운영 및 전속 작가
-          </h1>
-          <h1 className="">- (전) 출판사 황매 전속 작가</h1>
-          <h1 className="">- 다수 문예대회 및 공모전 수상 이력</h1>
-          <h1 className="">- (현) 6년차 시나리오 라이터</h1>
-          <h1 className="">{text}</h1> */}
         </div>
       </div>
       {/* <div className="relative">------</div> */}

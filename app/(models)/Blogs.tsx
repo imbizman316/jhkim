@@ -32,9 +32,19 @@ const profileSchema = new Schema(
   }
 );
 
+const homeTextSchema = new Schema({
+  content: {
+    type: [Schema.Types.Mixed],
+    required: true,
+  },
+});
+
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
 
 export const ProfileData =
   mongoose.models.ProfileData || mongoose.model("ProfileData", profileSchema);
+
+export const HomeText =
+  mongoose.models.HomeText || mongoose.model("HomeText", homeTextSchema);
 
 export default Blog;
