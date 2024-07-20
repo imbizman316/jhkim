@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./(components)/Navbar";
 import { AppWrapper } from "./(components)/context";
 import Footer from "./(components)/Footer";
+import AuthProvider from "./(components)/AuthProvider";
 
 // const inter = Inter({ subsets: ["latin"] });
 const nanum = Nanum_Gothic_Coding({
@@ -24,13 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={nanum.className}>
-        <AppWrapper>
-          <Navbar />
-          {children}
-          <Footer />
-        </AppWrapper>
-      </body>
+      <AuthProvider>
+        <body className={nanum.className}>
+          <AppWrapper>
+            <Navbar />
+            {children}
+            <Footer />
+          </AppWrapper>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

@@ -4,6 +4,7 @@ import { TypeAnimation } from "react-type-animation";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 async function fetchHomeText() {
   try {
@@ -78,6 +79,10 @@ export default function Home() {
     loadHomeText();
   }, []);
 
+  const { data: session } = useSession({
+    required: false,
+  });
+
   return (
     // bg-gradient-to-b from-black to-gray-900
     <div className="min-h-[50rem] p-10 w-full text-center flex flex-col items-center justify-start">
@@ -91,7 +96,7 @@ export default function Home() {
           repeat={Infinity}
         />
       )}
-      {editWindow && (
+      {editWindow && session?.user?.role === "admin" && (
         <form
           className="absolute top-[600px] flex flex-col gap-3 bg-gray-300 border-2 border-black p-5 w-[90%] sm:w-[90%] md:w-[70%] lg:w-[50%]"
           onSubmit={handleSubmit}
@@ -130,7 +135,14 @@ export default function Home() {
           ))}
         </form>
       )}
-      <button onClick={() => showEditWindow(!editWindow)}>...</button>
+      {session?.user?.role === "admin" && (
+        <button
+          className="text-5xl cursor-pointer hover:text-6xl duration-200 hover:text-red-700"
+          onClick={() => showEditWindow(!editWindow)}
+        >
+          ...
+        </button>
+      )}
     </div>
   );
 }

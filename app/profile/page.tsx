@@ -1,11 +1,12 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useAppContext } from "../(components)/context";
 import { LiaWindowCloseSolid } from "react-icons/lia";
-import { useRouter } from "next/navigation";
 
 type ProfileData = {
   _id: string;
@@ -43,6 +44,7 @@ function Profile() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [sessionData, setSessionData] = useState(null);
 
   useEffect(() => {
     async function loadProfileData() {
@@ -101,6 +103,13 @@ function Profile() {
     }
   };
 
+  const { data: session } = useSession({
+    required: false,
+    // onUnauthenticated() {
+    //   redirect("/api/auth/signin?callbackUrl=/profile");
+    // },
+  });
+
   return (
     <div className="min-h-[50rem] bg-black flex flex-col justify-center items-center w-full">
       <div className="flex flex-col gap-7">
@@ -152,12 +161,14 @@ function Profile() {
           </form>
         </Draggable>
       )}
-      <h1
-        className="text-black font-bold text-center mt-20 w-[30%] bg-white hover:bg-yellow-200"
-        onClick={() => setOpenProfileEdit(true)}
-      >
-        편집
-      </h1>
+      {session?.user?.role === "admin" && (
+        <h1
+          className="text-black font-bold text-center mt-20 w-[30%] bg-white hover:bg-yellow-200"
+          onClick={() => setOpenProfileEdit(true)}
+        >
+          편집
+        </h1>
+      )}
     </div>
   );
 }

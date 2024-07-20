@@ -20,4 +20,6 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ["/write/new", "/write/:id/:path"] };
+export const config = {
+  matcher: ["/write/new", "/write/:id/:path"],
+};

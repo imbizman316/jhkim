@@ -11,7 +11,7 @@ const Comments = ({ id }: { id: string }) => {
   return (
     <div className="min-w-[450px] sm:w-[450px] md:w-[700px] lg:w-[800px]">
       <h1 className="mt-20 text-center font-bold text-2xl w-full mb-5">
-        Comments
+        {comments.length} {comments.length > 1 ? "comments" : "comment"}
       </h1>
       <div className="flex flex-col gap-10 border-2 px-10 py-5">
         {comments.map((comment, index) => (
