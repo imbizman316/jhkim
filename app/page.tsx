@@ -27,11 +27,14 @@ async function fetchHomeText() {
 export default function Home() {
   const [sentence, setSentence] = useState("");
   const [second, setSecond] = useState(1000);
-  const [confirmedSentence, setConfirmedSentence] = useState([]);
+  const [confirmedSentence, setConfirmedSentence] = useState<
+    (string | number)[]
+  >([]);
   const [editWindow, showEditWindow] = useState(false);
 
   const handleAdd = () => {
     setConfirmedSentence((prev) => [...prev, sentence, second]);
+
     setSentence(""); // Clear the input field if needed
     setSecond(1000); // Reset the time input if needed
   };
