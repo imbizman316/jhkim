@@ -8,6 +8,7 @@ import Image from "next/image";
 import dompurify from "isomorphic-dompurify";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
+import Comments from "@/app/(components)/Comments";
 
 const getBlogById = async (id: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/Blogs/${id}`, {
@@ -70,6 +71,7 @@ async function BlogDetailPage({ params }: Params) {
         {session && session?.user?.role === "admin" && (
           <BlogActions id={BlogData._id} />
         )}
+        <Comments id={BlogData._id} />
       </>
     );
   };
