@@ -34,21 +34,26 @@ const Comments = async ({ id }: { id: string }) => {
       <div className="flex flex-col gap-10 border-2 px-10 py-5">
         {comments &&
           comments.length &&
-          comments.map((comment, index) => (
-            <div
-              key={index}
-              className="flex flex-row gap-10 w-[100%] border-b-2 pb-2 justify-between items-center"
-            >
-              <Image
-                width={30}
-                height={30}
-                src={comment.image || ""}
-                alt={comment.name || "user name"}
-              />
-              <h1 className="flex-1 font-bold">{comment.name}</h1>
-              <p className="flex-3">{comment.comment}</p>
-            </div>
-          ))}
+          comments.map(
+            (
+              comment: { image: string; name: string; comment: string },
+              index: number
+            ) => (
+              <div
+                key={index}
+                className="flex flex-row gap-10 w-[100%] border-b-2 pb-2 justify-between items-center"
+              >
+                <Image
+                  width={30}
+                  height={30}
+                  src={comment.image || ""}
+                  alt={comment.name || "user name"}
+                />
+                <h1 className="flex-1 font-bold">{comment.name}</h1>
+                <p className="flex-3">{comment.comment}</p>
+              </div>
+            )
+          )}
       </div>
       <CommentForm id={id} />
     </div>
