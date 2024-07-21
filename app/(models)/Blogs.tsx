@@ -39,6 +39,22 @@ const homeTextSchema = new Schema({
   },
 });
 
+const commentSchema = new Schema(
+  {
+    blog_id: String,
+    email: String,
+    name: String,
+    image: String,
+    comment: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Comments =
+  mongoose.models.Comments || mongoose.model("Comments", commentSchema);
+
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
 
 export const ProfileData =
