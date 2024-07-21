@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useAppContext } from "../(components)/context";
 import { LiaWindowCloseSolid } from "react-icons/lia";
+import dompurify from "isomorphic-dompurify";
 
 type ProfileData = {
   _id: string;
@@ -110,9 +111,11 @@ function Profile() {
     // },
   });
 
+  const sanitizer = dompurify.sanitize;
+
   return (
     <div className="min-h-[50rem] bg-black flex flex-col justify-center items-center w-full">
-      <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-7 items-center pt-10">
         <Image
           className="rounded-lg"
           src="/images/photo_2024-06-29_22-15-54.jpg"
@@ -120,12 +123,18 @@ function Profile() {
           width={300}
           height={300}
         />
-        <div className="text-white max-w-[320px] text-sm">
+        <div className="text-white max-w-[350px] text-sm">
           <h1 className="font-bold text-xl text-center">
             {profileData?.title}
           </h1>
           <hr className="py-3 mt-3" />
-          <h1>{profileData?.content}</h1>
+          <div
+            className="w-[100%] pb-10"
+            style={{ whiteSpace: "pre-wrap" }}
+            dangerouslySetInnerHTML={{
+              __html: sanitizer(profileData?.content || ""),
+            }}
+          />
         </div>
       </div>
       {/* <div className="relative">------</div> */}

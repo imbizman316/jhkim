@@ -2,10 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, createContext } from "react";
 import { AppContext, useAppContext } from "./context";
 import dompurify from "isomorphic-dompurify";
 import BlogCard from "./BlogCard";
+import { motion } from "framer-motion";
+
+const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+    y: 100,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 type Blog = {
   _id: string;
@@ -75,7 +90,17 @@ async function Diary() {
                 ?.filter((blog: Blog) => blog.category === category)
                 .reverse()
                 .map((blog: Blog, index: number) => (
+                  // <motion.div
+                  //   key={index}
+                  //   variants={fadeInAnimationVariants}
+                  //   initial="initial"
+                  //   whileInView="animate"
+                  //   viewport={{
+                  //     once: true,
+                  //   }}
+                  // >
                   <BlogCard blog={blog} key={index} />
+                  // </motion.div>
                 ))}
             </div>
           </div>
