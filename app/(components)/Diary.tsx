@@ -59,9 +59,9 @@ async function Diary() {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
-  const newsRef = useRef(null);
-  const diaryRef = useRef(null);
-  const novelRef = useRef(null);
+  const newsRef = useRef<HTMLDivElement>(null);
+  const diaryRef = useRef<HTMLDivElement>(null);
+  const novelRef = useRef<HTMLDivElement>(null);
 
   console.log(year, month, day);
 
@@ -82,7 +82,7 @@ async function Diary() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const refMap = {
+  const refMap: { [key: string]: React.RefObject<HTMLDivElement> } = {
     News: newsRef,
     Diary: diaryRef,
     Novel: novelRef,
