@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import Diary from "./(components)/Diary";
 
 async function fetchHomeText() {
   try {
@@ -143,6 +144,7 @@ export default function Home() {
           ...
         </button>
       )}
+      {/* <Diary /> */}
     </div>
   );
 }

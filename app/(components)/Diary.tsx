@@ -1,8 +1,8 @@
-// "use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, useRef } from "react";
 import { AppContext, useAppContext } from "./context";
 import dompurify from "isomorphic-dompurify";
 import BlogCard from "./BlogCard";
@@ -59,11 +59,34 @@ async function Diary() {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
+  const newsRef = useRef(null);
+  const diaryRef = useRef(null);
+  const novelRef = useRef(null);
+
   console.log(year, month, day);
 
   const sanitizer = dompurify.sanitize;
 
   const { blogs } = await getBlogs();
+
+  const scrollToRef = (ref) => {
+    if (ref.current) {
+      window.scrollTo({
+        top: ref.current.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const refMap = {
+    News: newsRef,
+    Diary: diaryRef,
+    Novel: novelRef,
+  };
 
   // const uniqueCategories = [
   //   ...new Set(blogs?.map(({ category }: { category: string }) => category)),
@@ -77,6 +100,11 @@ async function Diary() {
 
   return (
     <div className="flex flex-col items-center p-10 gap-10">
+      <div className="flex gap-10">
+        <button onClick={() => scrollToRef(diaryRef)}>diary</button>
+        <button onClick={() => scrollToRef(newsRef)}>news</button>
+        <button onClick={() => scrollToRef(novelRef)}>novel</button>
+      </div>
       {blogs &&
         uniqueCategories?.map((category, index) => (
           <div key={index} className="w-full">
@@ -85,7 +113,10 @@ async function Diary() {
               {category}
             </h1>
             <hr className="" />
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10"
+              ref={refMap[category] || null}
+            >
               {blogs
                 ?.filter((blog: Blog) => blog.category === category)
                 .reverse()
@@ -105,6 +136,7 @@ async function Diary() {
             </div>
           </div>
         ))}
+      <button onClick={() => scrollToTop()}>Back to Top</button>
     </div>
   );
 }
