@@ -69,7 +69,7 @@ async function Diary() {
 
   const { blogs } = await getBlogs();
 
-  const scrollToRef = (ref) => {
+  const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
       window.scrollTo({
         top: ref.current.offsetTop,
