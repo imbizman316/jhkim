@@ -12,7 +12,7 @@
     "@next/font": "^14.2.5",
     "dompurify": "^3.1.6",
     "firebase": "^10.12.3",
-    "framer-motion": "^11.3.8",
+    "framer-motion": "^11.3.31",
     "isomorphic-dompurify": "^2.13.0",
     "mongoose": "^8.4.4",
     "next": "14.2.4",
@@ -31,6 +31,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
+    "file-loader": "^6.2.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
