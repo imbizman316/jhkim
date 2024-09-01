@@ -5,12 +5,17 @@ import { createContext, useContext, useState } from "react";
 export const AppContext = createContext<any>(null);
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState("mikey is rampant");
+  const [showHamburger, setShowHamburger] = useState(false);
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
 
   return (
     <AppContext.Provider
-      value={{ state, setState, openProfileEdit, setOpenProfileEdit }}
+      value={{
+        showHamburger,
+        setShowHamburger,
+        openProfileEdit,
+        setOpenProfileEdit,
+      }}
     >
       {children}
     </AppContext.Provider>

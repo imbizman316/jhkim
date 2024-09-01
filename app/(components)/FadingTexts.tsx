@@ -28,7 +28,7 @@ function FirstHeader() {
 function VideoPlay() {
   return (
     <div>
-      <div className="flex w-[500px] justify-end">
+      <div className="flex w-[500px] justify-end flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row">
         <div className="text-4xl font-bold flex justify-center items-center">
           His hobbies
         </div>
@@ -46,8 +46,8 @@ function VideoPlay() {
           height={200}
         />
       </div>
-      <div className="w-[500px]">
-        <video width="500" height="240" autoPlay loop muted>
+      <div className="w-[400px] sm:w-[400px] md:w-[500px] lg:w-[500px] xl:w-[500px]">
+        <video width="400" height="240" autoPlay loop muted>
           <source
             src="/videos/video_2024-08-30_03-03-15.mp4"
             type="video/mp4"
