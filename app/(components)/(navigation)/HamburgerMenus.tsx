@@ -3,29 +3,74 @@ import React from "react";
 import { animate, motion } from "framer-motion";
 import { useAppContext } from "../context";
 
-const menus = [
-  {
-    href: "/",
-    title: "Home",
-    duration: 1,
-  },
-  {
-    href: "/profile",
-    title: "Who is?",
-    duration: 1.5,
-  },
-  {
-    href: "/blogs",
-    title: "Blogs",
-    duration: 2,
-  },
-];
-
 function HamburgerMenus({ session }: { session: any }) {
   const menuStyle = "text-4xl text-gray-400 hover:text-black hover:font-bold";
 
   const { showHamburger, setShowHamburger } = useAppContext();
 
+  const menus =
+    session?.user?.role === "admin"
+      ? [
+          {
+            href: "/",
+            title: "Home",
+            duration: 0,
+          },
+          {
+            href: "/profile",
+            title: "Who is?",
+            duration: 0.5,
+          },
+          {
+            href: "/blogs",
+            title: "Blogs",
+            duration: 1,
+          },
+          {
+            href: "/write/new",
+            title: "Write",
+            duration: 1.5,
+          },
+          session
+            ? {
+                href: "/api/auth/signout?callbackUrl=/",
+                title: "Sign-out",
+                duration: 2,
+              }
+            : {
+                href: "/api/auth/signin",
+                title: "Log-in",
+                duration: 2,
+              },
+        ]
+      : [
+          {
+            href: "/",
+            title: "Home",
+            duration: 0,
+          },
+          {
+            href: "/profile",
+            title: "Who is?",
+            duration: 0.5,
+          },
+          {
+            href: "/blogs",
+            title: "Blogs",
+            duration: 1,
+          },
+          session
+            ? {
+                href: "/api/auth/signout?callbackUrl=/",
+                title: "Sign-out",
+                duration: 1.5,
+              }
+            : {
+                href: "/api/auth/signin",
+                title: "Log-in",
+                duration: 1.5,
+              },
+        ];
   return (
     <div
       className={`fixed top-0 z-30 w-full h-screen bg-white pt-20 transition-opacity duration-300 sm:block md:hidden lg:hidden xl:hidden ${
@@ -48,7 +93,8 @@ function HamburgerMenus({ session }: { session: any }) {
                 opacity: 1,
                 y: 0,
                 transition: {
-                  duration: menu.duration,
+                  duration: 1,
+                  delay: menu.duration,
                 },
               },
             }}
@@ -63,22 +109,6 @@ function HamburgerMenus({ session }: { session: any }) {
             </Link>
           </motion.div>
         ))}
-
-        {session?.user?.role === "admin" && (
-          <Link className={menuStyle} href="/write/new">
-            Write
-          </Link>
-        )}
-        {/* <AuthLinks /> */}
-        {session ? (
-          <Link href="/api/auth/signout?callbackUrl=/" className={menuStyle}>
-            Logout
-          </Link>
-        ) : (
-          <Link href="/api/auth/signin " className={menuStyle}>
-            Login
-          </Link>
-        )}
       </div>
     </div>
   );
